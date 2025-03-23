@@ -1,0 +1,375 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pathway Navigation Styles */
+.pathway-navigation {
+  @apply bg-white p-6 rounded-xl shadow-sm border border-gray-100;
+}
+
+.progress-container {
+  @apply relative h-2 bg-gray-100 rounded-full mb-6;
+}
+
+.progress-bar {
+  @apply absolute h-full bg-blue-500 rounded-full transition-all duration-300;
+}
+
+.progress-indicator {
+  @apply absolute -right-2 -top-1.5 bg-white rounded-full shadow-sm p-1;
+}
+
+.section-info {
+  @apply mb-6 text-center;
+}
+
+.section-title {
+  @apply text-lg font-semibold text-gray-800 mb-1;
+}
+
+.step-counter {
+  @apply text-sm text-gray-500;
+}
+
+.control-group {
+  @apply flex items-center justify-between gap-4;
+}
+
+.nav-button {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.previous-button {
+  @apply text-gray-700 border border-gray-300 hover:bg-gray-50;
+}
+
+.save-button {
+  @apply text-blue-600 border border-blue-100 hover:bg-blue-50;
+}
+
+.next-button {
+  @apply text-white bg-blue-600 hover:bg-blue-700;
+}
+
+.error-indicator { @apply text-red-500; }
+.completed-indicator { @apply text-green-500; }
+.current-indicator { @apply text-blue-500; }
+
+/* Pathway Dashboard Styles */
+.pathway-dashboard {
+  @apply bg-white rounded-xl shadow-sm p-6 border border-gray-100;
+}
+
+.dashboard-header {
+  @apply flex items-center gap-3 mb-6 pb-4 border-b border-gray-100;
+}
+
+.progress-overview {
+  @apply flex gap-6 mb-8;
+}
+
+.circular-progress {
+  @apply relative w-24 h-24;
+}
+
+.progress-ring {
+  @apply transform -rotate-90;
+}
+
+.progress-ring circle {
+  @apply fill-none;
+  stroke-width: 6;
+}
+
+.progress-ring .background {
+  @apply stroke-gray-100;
+}
+
+.progress-ring .progress {
+  @apply stroke-blue-500 transition-all duration-300;
+}
+
+.time-estimate {
+  @apply absolute inset-0 flex flex-col items-center justify-center text-center;
+}
+
+.step-indicators {
+  @apply flex-1 space-y-3;
+}
+
+.step-item {
+  @apply flex items-center gap-3 w-full p-3 rounded-lg transition-colors;
+}
+
+.step-item.completed {
+  @apply bg-green-50 text-green-700;
+}
+
+.step-item.active {
+  @apply bg-blue-50 text-blue-700;
+}
+
+.step-marker {
+  @apply w-6 h-6 flex items-center justify-center rounded-full bg-white border;
+}
+
+.document-status {
+  @apply mb-6;
+}
+
+.doc-item {
+  @apply flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-gray-50;
+}
+
+.doc-item.missing {
+  @apply text-red-700 bg-red-50;
+}
+
+.quick-actions {
+  @apply flex gap-3 border-t pt-6;
+}
+
+.action-item {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 
+         hover:bg-gray-50 transition-colors;
+}
+
+/* Enhanced Form Assistant Styles */
+.enhanced-form-assistant {
+  @apply bg-white rounded-xl p-6 shadow-sm border border-gray-100;
+}
+
+.form-header {
+  @apply flex justify-between items-center mb-6 pb-4 border-b border-gray-100;
+}
+
+.form-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.form-field {
+  @apply space-y-2;
+}
+
+.field-header {
+  @apply flex justify-between items-center;
+}
+
+.field-actions {
+  @apply flex gap-2 items-center;
+}
+
+.auto-fill-btn {
+  @apply flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700;
+}
+
+.help-btn {
+  @apply text-gray-400 hover:text-gray-600;
+}
+
+.legal-term {
+  @apply flex items-center gap-2 text-sm text-gray-500 mt-1;
+}
+
+.error-message {
+  @apply flex items-center gap-2 text-red-600 text-sm mt-1;
+}
+
+.select-wrapper {
+  @apply relative;
+}
+
+.select-chevron {
+  @apply absolute right-3 top-3 text-gray-400 pointer-events-none;
+}
+
+.document-summary {
+  @apply mt-6 p-4 bg-blue-50 rounded-lg flex items-center gap-3 text-blue-800;
+}
+
+/* Input States */
+input, select, textarea {
+  @apply w-full p-3 rounded-lg border border-gray-300 focus:border-blue-500 
+         focus:ring-2 focus:ring-blue-200 transition-colors;
+}
+
+.error {
+  @apply border-red-300 focus:border-red-500 focus:ring-red-200;
+}
+
+.pathway-review {
+  @apply bg-white rounded-xl p-6 shadow-lg;
+}
+
+.review-header {
+  @apply flex flex-col md:flex-row justify-between items-start md:items-center 
+         mb-8 pb-4 border-b border-gray-200;
+}
+
+.review-grid {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+}
+
+.review-section {
+  @apply bg-gray-50 rounded-lg p-6;
+}
+
+.section-header {
+  @apply flex justify-between items-center mb-4;
+}
+
+.info-item {
+  @apply flex justify-between items-center p-3 bg-white rounded-lg border;
+}
+
+.form-preview {
+  @apply bg-white rounded-lg border overflow-hidden;
+}
+
+.submission-panel {
+  @apply mt-8 p-6 bg-blue-50 rounded-xl flex flex-col md:flex-row 
+         justify-between items-center gap-6;
+}
+
+.submit-button {
+  @apply flex items-center gap-3 px-8 py-4 bg-green-600 text-white 
+         rounded-xl font-medium transition-all hover:bg-green-700 
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.preview-content table {
+  @apply w-full text-sm;
+  td {
+    @apply p-3 border-b border-gray-100;
+    &:first-child { @apply font-medium text-gray-600; }
+  }
+}
+
+/* Confirmation Grid */
+.confirmation-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+/* Submit Button */
+.pathway-submit-button {
+  @apply w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl 
+         bg-green-600 text-white font-medium hover:bg-green-700 
+         disabled:opacity-50 disabled:cursor-not-allowed transition-all;
+}
+
+/* Security Notice */
+.security-notice {
+  @apply flex items-center gap-2 text-sm text-gray-600 p-3 bg-gray-100 rounded-lg;
+}
+
+/* Step Wrapper */
+.pathway-step-wrapper {
+  @apply flex flex-col gap-4 p-6 bg-white rounded-xl shadow-sm;
+}
+
+.step-controls {
+  @apply flex items-center justify-between gap-4;
+}
+
+.step-content {
+  @apply flex-grow;
+}
+
+.step-footer {
+  @apply pt-4 mt-4 border-t border-gray-100;
+}
+/* Progress indicators */
+.progress-container {
+  position: relative;
+  height: 4px;
+  background: #e0e0e0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+/* Status badges */
+.error-badge, .completed-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.error-badge { background: #fee2e2; color: #dc2626; }
+.completed-badge { background: #dcfce7; color: #16a34a; }
+
+/* Disabled states */
+.guest-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Wizard Components */
+.pathway-dashboard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.wizard-navigation {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.progress-container {
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #4dabf7;
+  transition: width 0.3s ease;
+}
