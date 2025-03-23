@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useReducer } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from "react-router-dom";
 import StepWizard from "react-step-wizard";
+import EnhancedPathwayWizard from './components/ui/pathways/EnhancedPathwayWizard';
 
 // Components
 import { ThemeProvider } from './components/ui/Theme';
