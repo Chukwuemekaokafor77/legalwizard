@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useReducer } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from "react-router-dom";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import StepWizard from "react-step-wizard";
 import EnhancedPathwayWizard from './components/ui/pathways/EnhancedPathwayWizard';
 
@@ -88,7 +88,8 @@ const App = () => {
   });
 
   const pathwayManager = useMemo(() => new PathwayService(familyLawPathways), []);
-  const documentAnalyzer = useMemo(() => new DocumentAnalysisService(), []);
+  // Comment out the documentAnalyzer initialization for now
+  // const documentAnalyzer = useMemo(() => new DocumentAnalysisService(), []);
   const formAssembler = useMemo(() => new FormAssemblyService(), []);
 
   useEffect(() => {
@@ -103,6 +104,7 @@ const App = () => {
         }
       }
     };
+
     loadProgress();
   }, [isGuest]);
 
@@ -124,14 +126,26 @@ const App = () => {
   }, [state.progress.completedSteps, state.activePathway]);
 
   const handleDocumentAnalysis = useCallback(async (file) => {
-    const analysis = await documentAnalyzer.processDocument(file);
-    dispatch({ type: 'UPDATE_DOCUMENTS', payload: [file] });
-    const autoFilled = formAssembler.mapDocumentToForms(analysis, state.activePathway?.formTemplates);
-    dispatch({ type: 'UPDATE_ANSWERS', payload: autoFilled });
-    const required = state.activePathway?.documentRequirements || [];
-    const complete = required.every(req => state.documents.some(d => d.type === req.id));
-    dispatch({ type: 'UPDATE_PROGRESS', payload: { requiredDocsSubmitted: complete } });
-  }, [documentAnalyzer, formAssembler, state.activePathway, state.documents]);
+    try {
+      // For now, just add the file without analysis
+      dispatch({ type: 'UPDATE_DOCUMENTS', payload: [file] });
+      
+      // Simple mock for auto-filled data
+      const mockAutoFilled = {
+        personalInfo: {
+          fullName: 'John Doe',
+          email: 'john@example.com'
+        }
+      };
+      dispatch({ type: 'UPDATE_ANSWERS', payload: mockAutoFilled });
+      
+      const required = state.activePathway?.documentRequirements || [];
+      const complete = required.every(req => state.documents.some(d => d.type === req.id));
+      dispatch({ type: 'UPDATE_PROGRESS', payload: { requiredDocsSubmitted: complete } });
+    } catch (err) {
+      console.error('Document processing failed:', err);
+    }
+  }, [state.activePathway, state.documents]);
 
   const autoSaveProgress = useCallback(async () => {
     if (!isGuest && state.activePathway) {
@@ -200,59 +214,57 @@ const App = () => {
   );
 
   return (
-    <Router>
-      <ThemeProvider theme="legalPathway">
-        <div className="pathway-container">
-          <UserSessionBanner 
-            isGuest={isGuest}
-            timeRemaining={sessionTimeRemaining}
-            onExtendSession={restartSession}
-          />
-          
-          <Routes>
-            <Route path="/" element={
-              <PathwaySelection 
-                pathways={familyLawPathways}
-                onSelectPathway={(id) => navigate(`/pathways/${id}`)}
+    <ThemeProvider theme="legalPathway">
+      <div className="pathway-container">
+        <UserSessionBanner 
+          isGuest={isGuest}
+          timeRemaining={sessionTimeRemaining}
+          onExtendSession={restartSession}
+        />
+        
+        <Routes>
+          <Route path="/" element={
+            <PathwaySelection 
+              pathways={familyLawPathways}
+              onSelectPathway={(id) => navigate(`/pathways/${id}`)}
+            />
+          }/>
+
+          <Route path="/pathways/:pathwayId" element={
+            <div className="pathway-wizard">
+              <WizardDashboard
+                pathway={state.activePathway}
+                progress={state.progress}
+                documents={state.documents}
               />
-            }/>
+              
+              {state.activePathway && renderPathwaySteps()}
+              
+              <PathwayHelpModal 
+                content={helpContent}
+                onClose={() => setHelpContent(null)}
+              />
+              <LegalDisclaimer />
+            </div>
+          }/>
 
-            <Route path="/pathways/:pathwayId" element={
-              <div className="pathway-wizard">
-                <WizardDashboard
-                  pathway={state.activePathway}
-                  progress={state.progress}
-                  documents={state.documents}
-                />
-                
-                {state.activePathway && renderPathwaySteps()}
-                
-                <PathwayHelpModal 
-                  content={helpContent}
-                  onClose={() => setHelpContent(null)}
-                />
-                <LegalDisclaimer />
-              </div>
-            }/>
+          <Route path="*" element={
+            <div className="error-page">
+              <h2>Page Not Found</h2>
+              <button onClick={() => navigate('/')}>
+                Return to Pathway Selection
+              </button>
+            </div>
+          }/>
+        </Routes>
 
-            <Route path="*" element={
-              <div className="error-page">
-                <h2>Page Not Found</h2>
-                <button onClick={() => navigate('/')}>
-                  Return to Pathway Selection
-                </button>
-              </div>
-            }/>
-          </Routes>
-
-          <DynamicFormAssistant 
-            answers={state.answers}
-            pathway={state.activePathway}
-            onSuggestionApply={handleFormUpdate}
-          />
-        </div>
-      </ThemeProvider>
-    </Router>
+        <DynamicFormAssistant 
+          answers={state.answers}
+          pathway={state.activePathway}
+          onSuggestionApply={handleFormUpdate}
+        />
+      </div>
+    </ThemeProvider>
   );
 };
 

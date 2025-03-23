@@ -1,4 +1,3 @@
-// src/data/pathwayConfigurations.ts
 import * as yup from 'yup';
 
 type BaseFormValues = {
@@ -10,13 +9,13 @@ type DocumentField = {
   [key: string]: File;
 };
 
-type PathwaySchemaType = yup.ObjectSchema<BaseFormValues & DocumentField>;
+type PathwaySchemaType = yup.ObjectSchema<any>;
 
 const createBaseSchema = () => {
   return yup.object().shape({
     jurisdiction: yup.string().required('Jurisdiction is required'),
     caseType: yup.string().required('Case type must be selected')
-  }) as yup.ObjectSchema<BaseFormValues>;
+  }) as any;
 };
 
 const createValidationSchema = (documentRequirements: Array<{
@@ -33,13 +32,15 @@ const createValidationSchema = (documentRequirements: Array<{
       const documentSchema = yup.mixed<File>()
         .test('fileType', 'Invalid file type', value => 
           req.acceptedFormats.some(format => value?.type?.includes(format))
+        )
         .test('fileSize', 'File too large', value => 
-          (value?.size || 0) <= req.maxSize)
+          (value?.size || 0) <= req.maxSize
+        )
         .required(`${req.title} is required`);
 
       schema = schema.shape({
         [req.id]: documentSchema
-      }) as PathwaySchemaType;
+      }) as any;
     }
   });
 

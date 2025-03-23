@@ -95,7 +95,7 @@ const EnhancedPathwayWizard = ({ pathwayId, onNavigate }) => {
   const { sessionTimeRemaining, restartSession } = usePathwaySession({
     timeout: PATHWAY_SESSION_TIMEOUT,
     onExpire: () => {
-      setPathwayState({ type: 'RESET_SESSION' });
+      dispatch({ type: 'RESET_SESSION' });
       alert('Session expired. Please start a new session.');
       onNavigate('/');
     }

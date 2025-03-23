@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserSessionService } from '@services/UserSessionService';
+import { UserSessionService } from '../../../services/UserSessionService';
 
 const UserSessionBanner = ({ isGuest, timeRemaining, onExtendSession }) => {
   const formatTime = (seconds) => {
